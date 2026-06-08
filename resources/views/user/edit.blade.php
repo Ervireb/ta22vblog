@@ -32,8 +32,8 @@
 
     <!-- Create -->
     <div class="flex mx-auto gap-4">
-        <button class="btn btn-primary" type="submit">Edit the user</button>
         <a class="btn btn-secondary" type="submit" href="{{ route('user.index') }}">Back</a>
+        <button class="btn btn-primary" type="submit">Edit the user</button>
     </div>
 <div>
 

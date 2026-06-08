@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
@@ -30,6 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('/admin/tags', TagController::class);
 
     Route::post('/post/{post}/like', [PublicController::class, 'like'])->name('like');
+    Route::post('/post/{post}/comment', [CommentController::class, 'store'])->name('comments.store');
+    
+    Route::get('/comment/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+    Route::put('/comment/{comment}', [CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

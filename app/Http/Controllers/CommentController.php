@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 
@@ -27,9 +28,15 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCommentRequest $request)
+    public function store(StoreCommentRequest $request, Post $post)
     {
-        //
+        $post->comments()->create([
+            'body' => $request->body,
+            'user_id' => auth()->id(),
+            'post_id' => $post->id,
+        ]);
+
+        return back();
     }
 
     /**
@@ -45,7 +52,9 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
+        abort_unless($comment->user_id === auth()->id(), 403);
+
+        return view('comments.edit', compact('comment'));
     }
 
     /**
@@ -53,14 +62,27 @@ class CommentController extends Controller
      */
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
-        //
-    }
+        abort_unless($comment->user_id === auth()->id(), 403);
+
+        $comment->update([
+            'body' => $request->body,
+        ]);
+
+        return redirect()->route('post', $comment->post);
+        }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Comment $comment)
     {
-        //
+        abort_unless(
+            $comment->user_id === auth()->id(),
+            403
+        );
+
+        $comment->delete();
+
+        return back();
     }
 }

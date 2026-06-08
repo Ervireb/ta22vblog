@@ -30,8 +30,8 @@
 
     <!-- Create -->
     <div class="flex mx-auto gap-4">
-        <button class="btn btn-primary" type="submit">Create an user</button>
         <a class="btn btn-secondary" type="submit" href="{{ route('user.index') }}">Back</a>
+        <button class="btn btn-primary" type="submit">Create an user</button>
     </div>
 <div>
 
