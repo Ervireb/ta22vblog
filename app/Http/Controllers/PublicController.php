@@ -36,6 +36,6 @@ class PublicController extends Controller
 
     public function tag(Tag $tag){
         $posts = $tag->posts()->with('user')->withCount('comments', 'likes')->latest()->simplePaginate(16);
-        return view('welcome', compact('posts'));
+        return view('welcome', compact('posts', 'tag'));
     }
 }

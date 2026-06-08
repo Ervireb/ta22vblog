@@ -10,6 +10,7 @@
             <thead>
                 <th>ID</th>
                 <th>Title</th>
+                <th>Tags</th>
                 <th>Created</th>
                 <th>Updated</th>
                 <th>Actions</th>
@@ -19,6 +20,11 @@
                     <tr class="hover">
                         <td>{{$post->id}}</td>
                         <td>{{$post->title}}</td>
+                        <td>
+                            @foreach($post->tags as $tag)
+                                <span class="badge badge-primary">{{$tag->name}}</span>
+                            @endforeach
+                        </td>
                         <td>{{$post->created_at}}</td>
                         <td>{{$post->updated_at}}</td>
                         <td>
@@ -38,6 +44,7 @@
             <tfoot>
                 <th>ID</th>
                 <th>Title</th>
+                <th>Tags</th>
                 <th>Created</th>
                 <th>Updated</th>
                 <th>Actions</th>

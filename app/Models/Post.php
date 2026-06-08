@@ -58,7 +58,9 @@ class Post extends Model
     protected static function booted(): void
     {
         static::deleting(function (Post $post) {
-            Storage::disk('public')->delete($post->image);
+            if ($post->image) {
+                Storage::disk('public')->delete($post->image);
+            }
         });
     }
 }

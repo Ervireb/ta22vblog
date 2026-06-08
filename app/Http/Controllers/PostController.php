@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Tag;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
@@ -34,7 +35,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $tags = Tag::all();
+        return view('posts.create', compact('tags'));
     }
 
     /**
@@ -46,10 +48,13 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->user()->associate(auth()->user());
-        if($request->has('image')){
+        if($request->hasFile('image')){
             $post->image = $request->file('image')->store('', ['disk' => 'public']);
         }
         $post->save();
+        if ($request->has('tags')) {
+            $post->tags()->attach($request->tags);
+        }
         return redirect()->route('posts.index');
     }
 
@@ -66,7 +71,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        $tags = Tag::all();
+        return view('posts.edit', compact('post', 'tags'));
     }
 
     /**

@@ -18,6 +18,16 @@
                     <td>{!! $post->displayBody !!}</td>
                 </tr>
                 <tr class="hover">
+                    <th>Tags</th>
+                    <td>
+                        @foreach ($post->tags as $tag)
+                            <a href="{{route('tag', ['tag' => $tag])}}">
+                                <div class="badge badge-outline">{{$tag->name}}</div>
+                            </a>
+                        @endforeach
+                    </td>
+                </tr>
+                <tr class="hover">
                     <th>Created</th>
                     <td>{{$post->created_at}}</td>
                 </tr>

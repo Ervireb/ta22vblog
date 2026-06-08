@@ -46,8 +46,30 @@
                             @enderror
                         </div>
                     </label>
+                    
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Tags</span>
+                        </div>
+
+                        <select name="tags[]" multiple
+                            class="select select-bordered w-full">
+
+                            @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}">
+                                    {{ $tag->name }}
+                                </option>
+                            @endforeach
+
+                        </select>
+
+                        <div class="label">
+                            @error('tags')
+                                <span class="label-text-alt text-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </label>
                     <input type="submit" class="btn btn-primary" value="Create" />
-                    </div>
                 </form>
             </div>
         </div>
